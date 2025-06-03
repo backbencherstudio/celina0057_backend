@@ -142,3 +142,55 @@ export const deleteCollection = async (req, res) => {
     });
   }
 };
+
+
+
+
+export const getCollections = async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const where: any = {};
+    if (category) {
+      where.category = category.toUpperCase();
+    }
+
+    const totalCount = await prisma.foods.count({ where });
+
+    const foods = await prisma.foods.findMany({
+      where,
+      skip,
+      take: Number(limit),
+      orderBy: {
+        createdAt: 'desc'
+      },
+    });
+    
+    const transformedFoods = foods.map(food => ({
+      id: food.id,
+      name: food.name,
+      category: food.category,
+      image: food.image ? `${baseUrl}/uploads/${food.image}` : null,
+      createdAt: food.createdAt
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: transformedFoods,
+      pagination: {
+        total: totalCount,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(totalCount / Number(limit))
+      }
+    });
+
+  } catch (error) {
+    console.error("Raw query error:", error);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+};
