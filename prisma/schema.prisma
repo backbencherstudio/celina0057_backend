@@ -17,7 +17,6 @@ model User {
   name      String?
   image     String?
   role      Role     @default(ADMIN)
-  foods     Foods[]
   createdAt DateTime @default(now())
 }
 
@@ -27,8 +26,6 @@ model Foods {
   category  Category
   image     String
   createdAt DateTime @default(now())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
 }
 
 enum Category {
