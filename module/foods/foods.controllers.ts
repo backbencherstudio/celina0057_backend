@@ -5,26 +5,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// model User {
-//   id        String   @id @default(cuid())
-//   email     String   @unique
-//   password  String
-//   name      String?
-//   image     String?
-//   role      Role     @default(ADMIN)
-//   foods     Foods[]
-//   createdAt DateTime @default(now())
-// }
-
-// model Foods {
-//   id        String   @id @default(cuid())
-//   name      String
-//   category  Category
-//   image     String
-//   createdAt DateTime @default(now())
-//   userId    String
-//   user      User     @relation(fields: [userId], references: [id])
-// }
 
 export const createCollection = async (req, res) => {
   try {
@@ -68,7 +48,6 @@ export const createCollection = async (req, res) => {
 };
 
 export const updateCollection = async (req, res) => {
-  console.log(req.file);
   try {
     const { name, category } = req.body;
     const foodId = req.params.id;
@@ -125,4 +104,41 @@ export const updateCollection = async (req, res) => {
   }
 };
 
+export const deleteCollection = async (req, res) => {
+  try {
+    const foodId = req.params.id;
+    const existingFood = await prisma.foods.findUnique({
+      where: { id: foodId },
+    });
+    if (!existingFood) {
+      return res.status(404).json({ message: "Food collection not found" });
+    }
 
+    const deletedFood = await prisma.foods.delete({
+      where: { id: foodId },
+    });
+
+    
+
+    if (deletedFood && existingFood.image) {
+      const oldImagePath = path.join(
+        __dirname,
+        "../../uploads",
+        existingFood.image
+      );
+      if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+      }
+    }
+    res.status(200).json({
+      success: true,
+      message: "Food collection deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
+};
