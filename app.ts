@@ -5,6 +5,7 @@ import path from "path";
 
 import admin from "./module/admin/admin.routes";
 import foods from "./module/foods/foods.routes";
+import feedback from "./module/feedback/feedback.route";
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use(morgan("dev"));
 
 app.use("/admin", admin);
 app.use("/foods", foods)
-
+app.use('/feedback', feedback)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
