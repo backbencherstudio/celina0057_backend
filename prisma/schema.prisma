@@ -11,26 +11,32 @@ datasource db {
 
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   email     String   @unique
   password  String
   name      String?
   image     String?
+  role      Role     @default(ADMIN)
   foods     Foods[]
   createdAt DateTime @default(now())
 }
 
 model Foods {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   name      String
   category  Category
   image     String
   createdAt DateTime @default(now())
-  userId    Int
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
 }
 
 enum Category {
   CRAVINGS
   MOOD
+}
+
+enum Role {
+  USER
+  ADMIN
 }

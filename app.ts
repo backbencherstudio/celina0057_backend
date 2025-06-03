@@ -3,7 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import path from "path";
 
-
+import admin from "./module/admin/admin.routes";
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.use("/users", admin);
 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

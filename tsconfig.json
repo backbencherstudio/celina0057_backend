@@ -30,6 +30,6 @@
     "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "types"],
   "exclude": ["typings/*", "node_modules"]
 }
