@@ -1,5 +1,5 @@
 export const getImageUrl = (imagePath: string) => {
-    return `${process.env.APP_URL}${imagePath}`;
+    return `https://cure-marriage-thinkpad-perfume.trycloudflare.com${imagePath}`;
   };
   
   export const baseUrl = process.env.APP_URL;

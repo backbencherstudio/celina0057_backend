@@ -9,15 +9,34 @@ import feedback from "./module/feedback/feedback.route";
 
 const app = express();
 
+// Enhanced CORS configuration
 app.use(
   cors({
     origin: [
-        "http://localhost:3000"
-        
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://v0-recreate-ui-from-screenshot-gules-seven-93.vercel.app",
+        "https://celina0057-dashboard.vercel.app",
+        "https://celina0057-dashboard-git-main-bbsfullstacks-projects.vercel.app"
     ],
+    credentials: true, // Add this to support credentials
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Content-Type',
+      'Accept',
+      'Authorization',
+      'Cache-Control',
+      'Pragma'
+    ],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   })
 );
 
+// Handle preflight requests explicitly
+// app.options('*', cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
@@ -42,3 +61,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 export default app;
+
+
+

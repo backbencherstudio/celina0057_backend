@@ -147,6 +147,7 @@ export const deleteCollection = async (req, res) => {
 
 
 export const getCollections = async (req, res) => {
+  console.log(baseUrl)
   try {
     const { page = 1, limit = 10, category } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
@@ -174,6 +175,7 @@ export const getCollections = async (req, res) => {
       image: food.image ? `${baseUrl}/uploads/${food.image}` : null,
       createdAt: food.createdAt
     }));
+
 
     res.status(200).json({
       success: true,

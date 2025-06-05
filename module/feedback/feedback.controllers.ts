@@ -50,16 +50,27 @@ export const createFeedback = async (req, res) => {
 
 
 
-
 export const getAllFeedback = async (req, res) => {
   try {
+    const { page = 1, limit = 8, sortBy = "createdAt", order = "desc" } = req.query;
+
+    const skip = (Number(page) - 1) * Number(limit);
+
     const feedbackList = await prisma.feedback.findMany({
-      orderBy: { createdAt: "desc" },
+      skip,
+      take: Number(limit),
+      orderBy: {
+        [sortBy]: order === "asc" ? "asc" : "desc",
+      },
     });
+
+    const total = await prisma.feedback.count();
 
     res.status(200).json({
       success: true,
-      total: feedbackList.length,
+      total,
+      page: Number(page),
+      limit: Number(limit),
       data: feedbackList,
     });
   } catch (error) {
@@ -70,6 +81,7 @@ export const getAllFeedback = async (req, res) => {
     });
   }
 };
+
 
 export const deleteFeedback = async (req, res) => {
   try {
