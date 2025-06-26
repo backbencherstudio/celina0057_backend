@@ -19,24 +19,8 @@ app.use(
         "https://celina0057-dashboard.vercel.app",
         "https://celina0057-dashboard-git-main-bbsfullstacks-projects.vercel.app"
     ],
-    credentials: true, // Add this to support credentials
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: [
-      'Origin',
-      'X-Requested-With',
-      'Content-Type',
-      'Accept',
-      'Authorization',
-      'Cache-Control',
-      'Pragma'
-    ],
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-  })
 );
 
-// Handle preflight requests explicitly
-// app.options('*', cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
