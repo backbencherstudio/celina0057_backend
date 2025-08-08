@@ -33,6 +33,15 @@ model feedback {
   createdAt   DateTime @default(now())
 }
 
+model legalDocument {
+  id              String   @id @default(cuid())
+  privacyPolicy   String?
+  termsConditions String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+
 enum Category {
   CRAVINGS
   MOOD
