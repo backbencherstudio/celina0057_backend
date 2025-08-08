@@ -12,11 +12,17 @@ const app = express();
 app.use(
   cors({
     origin: [
+<<<<<<< Updated upstream
       "http://localhost:3000",
       "http://localhost:3001",
       "https://v0-recreate-ui-from-screenshot-gules-seven-93.vercel.app",
       "https://celina0057-dashboard.vercel.app",
       "https://celina0057-dashboard-git-main-bbsfullstacks-projects.vercel.app",
+=======
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://v0-recreate-ui-from-screenshot-gules-seven-93.vercel.app"
+>>>>>>> Stashed changes
     ],
   })
 );
@@ -45,3 +51,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 export default app;
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
